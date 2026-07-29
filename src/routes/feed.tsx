@@ -49,17 +49,17 @@ function FeedPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["feed"] });
       setContent("");
-      setImageUrl("");
+      setImageUrl(null);
     },
   });
 
   const [content, setContent] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
-    createMutation.mutate({ data: { content: content.trim(), imageUrl: imageUrl || null } });
+    createMutation.mutate({ data: { content: content.trim(), imageUrl } });
   };
 
   return (
@@ -73,13 +73,8 @@ function FeedPage() {
           placeholder="What's on your mind?"
           className="min-h-[100px] resize-none rounded-xl border-0 bg-transparent p-0 shadow-none focus-visible:ring-0"
         />
-        <div className="mt-3 flex items-center gap-2">
-          <Input
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="Image URL (optional)"
-            className="flex-1 rounded-xl"
-          />
+        <ImageUpload value={imageUrl} onChange={setImageUrl} className="mt-3" />
+        <div className="mt-3 flex items-center justify-end gap-2">
           <Button type="submit" disabled={createMutation.isPending || !content.trim()} className="rounded-xl">
             {createMutation.isPending ? (
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
@@ -88,6 +83,7 @@ function FeedPage() {
             )}
           </Button>
         </div>
+
       </form>
 
       <div className="mt-8 space-y-6">
