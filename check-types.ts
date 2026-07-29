@@ -1,11 +1,5 @@
 import { getLikedPostIds, createPost, getPublicProfile } from "./src/lib/social.functions";
-import { useServerFn } from "@tanstack/react-start";
 
-const fetchLikedIds = useServerFn(getLikedPostIds);
-const result = fetchLikedIds({ postIds: ["uuid"] });
-
-const createPostFn = useServerFn(createPost);
-const result2 = createPostFn({ content: "hello", imageUrl: null });
-
-const getProfileFn = useServerFn(getPublicProfile);
-const result3 = getProfileFn({ userId: "uuid" });
+const result = getLikedPostIds({ postIds: ["uuid"] });
+const result2 = createPost({ content: "hello", imageUrl: null });
+const result3 = getPublicProfile({ userId: "uuid" });
