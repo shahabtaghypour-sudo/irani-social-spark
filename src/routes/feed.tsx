@@ -6,9 +6,9 @@ import { requireAuth } from "@/lib/auth-guard";
 import { getFeed, createPost, toggleLike, getLikedPostIds } from "@/lib/social.functions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { PostCard } from "@/components/post-card";
-import { Send, ImageIcon } from "lucide-react";
+import { ImageUpload } from "@/components/image-upload";
+import { Send } from "lucide-react";
 
 export const Route = createFileRoute("/feed")({
   head: () => ({
