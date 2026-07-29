@@ -39,7 +39,7 @@ function ConversationPage() {
 
   const { data: messages = [] } = useQuery({
     queryKey: ["messages", id],
-    queryFn: () => fetchMessages({ conversationId: id }),
+    queryFn: () => fetchMessages({ data: { conversationId: id } }),
   });
 
   const { data: conversations = [] } = useQuery({
@@ -67,7 +67,7 @@ function ConversationPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
-    sendMutation.mutate({ conversationId: id, content: content.trim() });
+    sendMutation.mutate({ data: { conversationId: id, content: content.trim() } });
   };
 
   return (

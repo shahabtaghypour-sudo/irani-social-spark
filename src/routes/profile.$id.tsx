@@ -36,12 +36,12 @@ function ProfilePage() {
 
   const { data: profile } = useQuery({
     queryKey: ["profile", id],
-    queryFn: () => fetchProfile({ userId: id }),
+    queryFn: () => fetchProfile({ data: { userId: id } }),
   });
 
   const { data: posts = [] } = useQuery({
     queryKey: ["public-posts", id],
-    queryFn: () => fetchPosts({ userId: id }),
+    queryFn: () => fetchPosts({ data: { userId: id } }),
   });
 
   const { data: following } = useQuery({

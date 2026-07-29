@@ -43,7 +43,7 @@ function ExplorePage() {
       const map: Record<string, boolean> = {};
       await Promise.all(
         profileIds.map(async (id) => {
-          map[id] = await isFollowingFn({ profileId: id });
+          map[id] = await isFollowingFn({ data: { profileId: id } });
         }),
       );
       return map;
@@ -108,7 +108,7 @@ function ExplorePage() {
               size="sm"
               className="mt-4 w-full rounded-xl"
               disabled={followMutation.isPending}
-              onClick={() => followMutation.mutate({ profileId: profile.id, follow: !followingMap?.[profile.id] })}
+              onClick={() => followMutation.mutate({ data: { profileId: profile.id, follow: !followingMap?.[profile.id] } })}
             >
               {followingMap?.[profile.id] ? "Following" : "Follow"}
             </Button>
