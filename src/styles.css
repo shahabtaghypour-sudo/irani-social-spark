@@ -182,3 +182,22 @@
 @utility shadow-soft {
   box-shadow: 0 4px 20px -4px color-mix(in oklab, var(--color-lavender-500) 18%, transparent);
 }
+
+@utility ember-glow {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-rose-400) 35%, transparent),
+    0 0 18px -2px color-mix(in oklab, var(--color-rose-500) 55%, transparent);
+}
+
+@utility smoke-panel {
+  background:
+    radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--color-rose-200) 70%, transparent) 0%, transparent 55%),
+    radial-gradient(120% 120% at 100% 20%, color-mix(in oklab, var(--color-lavender-200) 60%, transparent) 0%, transparent 60%),
+    var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+@utility ash-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-rose-300), transparent);
+}

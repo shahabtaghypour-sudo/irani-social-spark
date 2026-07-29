@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as MarketRouteImport } from './routes/market'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -20,6 +21,11 @@ import { Route as MessagesIdRouteImport } from './routes/messages.$id'
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketRoute = MarketRouteImport.update({
+  id: '/market',
+  path: '/market',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeedRoute = FeedRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/explore': typeof ExploreRoute
   '/feed': typeof FeedRoute
+  '/market': typeof MarketRoute
   '/messages': typeof MessagesRouteWithChildren
   '/messages/$id': typeof MessagesIdRoute
   '/profile/$id': typeof ProfileIdRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/explore': typeof ExploreRoute
   '/feed': typeof FeedRoute
+  '/market': typeof MarketRoute
   '/messages': typeof MessagesRouteWithChildren
   '/messages/$id': typeof MessagesIdRoute
   '/profile/$id': typeof ProfileIdRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/explore': typeof ExploreRoute
   '/feed': typeof FeedRoute
+  '/market': typeof MarketRoute
   '/messages': typeof MessagesRouteWithChildren
   '/messages/$id': typeof MessagesIdRoute
   '/profile/$id': typeof ProfileIdRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/explore'
     | '/feed'
+    | '/market'
     | '/messages'
     | '/messages/$id'
     | '/profile/$id'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/explore'
     | '/feed'
+    | '/market'
     | '/messages'
     | '/messages/$id'
     | '/profile/$id'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/explore'
     | '/feed'
+    | '/market'
     | '/messages'
     | '/messages/$id'
     | '/profile/$id'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ExploreRoute: typeof ExploreRoute
   FeedRoute: typeof FeedRoute
+  MarketRoute: typeof MarketRoute
   MessagesRoute: typeof MessagesRouteWithChildren
   ProfileIdRoute: typeof ProfileIdRoute
 }
@@ -127,6 +140,13 @@ declare module '@tanstack/react-router' {
       path: '/messages'
       fullPath: '/messages'
       preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/market': {
+      id: '/market'
+      path: '/market'
+      fullPath: '/market'
+      preLoaderRoute: typeof MarketRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feed': {
@@ -191,6 +211,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ExploreRoute: ExploreRoute,
   FeedRoute: FeedRoute,
+  MarketRoute: MarketRoute,
   MessagesRoute: MessagesRouteWithChildren,
   ProfileIdRoute: ProfileIdRoute,
 }
