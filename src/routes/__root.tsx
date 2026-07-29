@@ -14,7 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider, useAuth } from "../lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Cigarette, Home, Search, MessageCircle, User } from "lucide-react";
+import { Cigarette, Home, Search, MessageCircle, User, ShoppingBag } from "lucide-react";
 
 function NotFoundComponent() {
   return (
@@ -144,8 +144,8 @@ function AppChrome() {
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-lavender-400 to-rose-400 text-primary-foreground">
-              <Cigarette className="h-5 w-5" />
+            <div className="ember-glow grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-rose-300 via-rose-400 to-lavender-400 text-primary-foreground">
+              <Cigarette className="h-5 w-5 -rotate-12" />
             </div>
             <span className="font-display text-xl font-semibold tracking-tight text-foreground">
               سيگار صورتی
@@ -155,6 +155,7 @@ function AppChrome() {
           <nav className="hidden items-center gap-1 md:flex">
             <HeaderLink to="/" icon={Home} label="Home" />
             <HeaderLink to="/explore" icon={Search} label="Explore" />
+            <HeaderLink to="/market" icon={ShoppingBag} label="Market" />
             {user && <HeaderLink to="/messages" icon={MessageCircle} label="Messages" />}
             {user && <HeaderLink to={`/profile/${user.id}`} icon={User} label="Profile" />}
           </nav>
@@ -228,6 +229,7 @@ function MobileNav() {
       <div className="mx-auto flex h-16 max-w-md items-center justify-around px-2">
         <MobileNavLink to="/" icon={Home} label="Home" />
         <MobileNavLink to="/explore" icon={Search} label="Explore" />
+        <MobileNavLink to="/market" icon={ShoppingBag} label="Market" />
         {user && <MobileNavLink to="/messages" icon={MessageCircle} label="Messages" />}
         {user && <MobileNavLink to={`/profile/${user.id}`} icon={User} label="Profile" />}
       </div>
