@@ -1,13 +1,12 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute, useParams, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { getPublicProfile, getPublicPosts, toggleFollow, isFollowing, getOrCreateConversation } from "@/lib/social.functions";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, MessageCircle, MessageSquare } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { formatDistanceToNow } from "date-fns";
+import { PostCard } from "@/components/post-card";
+import { MessageSquare } from "lucide-react";
 
 export const Route = createFileRoute("/profile/$id")({
   head: ({ params }) => ({
