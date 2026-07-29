@@ -46,7 +46,7 @@ function ProfilePage() {
 
   const { data: following } = useQuery({
     queryKey: ["following", profile?.id],
-    queryFn: () => isFollowingFn({ profileId: profile!.id }),
+    queryFn: () => isFollowingFn({ data: { profileId: profile!.id } }),
     enabled: !!profile,
   });
 
@@ -110,7 +110,7 @@ function ProfilePage() {
                   size="sm"
                   className="rounded-full px-6"
                   disabled={followMutation.isPending}
-                  onClick={() => followMutation.mutate({ profileId: profile.id, follow: !following })}
+                  onClick={() => followMutation.mutate({ data: { profileId: profile.id, follow: !following } })}
                 >
                   {following ? "Following" : "Follow"}
                 </Button>
@@ -119,7 +119,7 @@ function ProfilePage() {
                   size="sm"
                   className="rounded-full px-6"
                   disabled={messageMutation.isPending}
-                  onClick={() => messageMutation.mutate({ otherProfileId: profile.id })}
+                  onClick={() => messageMutation.mutate({ data: { otherProfileId: profile.id } })}
                 >
                   <MessageSquare className="mr-2 h-4 w-4" />
                   Message

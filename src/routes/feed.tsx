@@ -41,7 +41,7 @@ function FeedPage() {
   const postIds = posts.map((p) => p.id);
   const { data: likedSet } = useQuery({
     queryKey: ["liked", postIds],
-    queryFn: () => fetchLikedIds({ postIds }),
+    queryFn: () => fetchLikedIds({ data: { postIds } }),
     enabled: postIds.length > 0,
   });
 
