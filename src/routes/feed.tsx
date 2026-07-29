@@ -7,9 +7,8 @@ import { getFeed, createPost, toggleLike, getLikedPostIds } from "@/lib/social.f
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, MessageCircle, Send, ImageIcon } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+import { PostCard } from "@/components/post-card";
+import { Send, ImageIcon } from "lucide-react";
 
 export const Route = createFileRoute("/feed")({
   head: () => ({
