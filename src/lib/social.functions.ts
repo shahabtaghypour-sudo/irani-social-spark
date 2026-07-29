@@ -27,7 +27,7 @@ export const getPublicProfile = createServerFn({ method: "GET" })
   });
 
 export const getPublicPosts = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ userId: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ userId: z.string().uuid() }).parse(data))
   .handler(async ({ data }) => {
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient<Database>(
@@ -49,7 +49,7 @@ export const getPublicPosts = createServerFn({ method: "GET" })
   });
 
 export const getPublicFeed = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ limit: z.number().min(1).max(50).default(20) }).parse(data))
+  .validator((data) => z.object({ limit: z.number().min(1).max(50).default(20) }).parse(data))
   .handler(async ({ data }) => {
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient<Database>(
@@ -111,7 +111,7 @@ export const ensureMyProfile = createServerFn({ method: "POST" })
 
 export const updateMyProfile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z
       .object({
         username: z.string().min(2).max(30).optional(),
@@ -158,7 +158,7 @@ export const getFeed = createServerFn({ method: "GET" })
 
 export const createPost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z
       .object({
         content: z.string().min(1).max(1000),
@@ -191,7 +191,7 @@ export const createPost = createServerFn({ method: "POST" })
 
 export const toggleLike = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ postId: z.string().uuid(), liked: z.boolean() }).parse(data))
+  .validator((data) => z.object({ postId: z.string().uuid(), liked: z.boolean() }).parse(data))
   .handler(async ({ context, data }) => {
     if (data.liked) {
       const { error } = await context.supabase.from("likes").insert({
@@ -227,7 +227,7 @@ export const toggleLike = createServerFn({ method: "POST" })
 
 export const getLikedPostIds = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ postIds: z.array(z.string().uuid()) }).parse(data))
+  .validator((data) => z.object({ postIds: z.array(z.string().uuid()) }).parse(data))
   .handler(async ({ context, data }) => {
     const { data: likes, error } = await context.supabase
       .from("likes")
@@ -240,7 +240,7 @@ export const getLikedPostIds = createServerFn({ method: "GET" })
   });
 
 export const getComments = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ postId: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ postId: z.string().uuid() }).parse(data))
   .handler(async ({ data }) => {
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient<Database>(
@@ -263,7 +263,7 @@ export const getComments = createServerFn({ method: "GET" })
 
 export const createComment = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({ postId: z.string().uuid(), content: z.string().min(1).max(500) }).parse(data),
   )
   .handler(async ({ context, data }) => {
@@ -301,7 +301,7 @@ export const createComment = createServerFn({ method: "POST" })
 
 export const toggleFollow = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ profileId: z.string().uuid(), follow: z.boolean() }).parse(data))
+  .validator((data) => z.object({ profileId: z.string().uuid(), follow: z.boolean() }).parse(data))
   .handler(async ({ context, data }) => {
     const { data: myProfile } = await context.supabase
       .from("profiles")
@@ -331,7 +331,7 @@ export const toggleFollow = createServerFn({ method: "POST" })
 
 export const isFollowing = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ profileId: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ profileId: z.string().uuid() }).parse(data))
   .handler(async ({ context, data }) => {
     const { data: myProfile } = await context.supabase
       .from("profiles")
@@ -396,7 +396,7 @@ export const getConversations = createServerFn({ method: "GET" })
 
 export const getMessages = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ conversationId: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ conversationId: z.string().uuid() }).parse(data))
   .handler(async ({ context, data }) => {
     const { data: messages, error } = await context.supabase
       .from("messages")
@@ -410,7 +410,7 @@ export const getMessages = createServerFn({ method: "GET" })
 
 export const sendMessage = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({ conversationId: z.string().uuid(), content: z.string().min(1).max(2000) }).parse(data),
   )
   .handler(async ({ context, data }) => {
@@ -444,7 +444,7 @@ export const sendMessage = createServerFn({ method: "POST" })
 
 export const getOrCreateConversation = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({ otherProfileId: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ otherProfileId: z.string().uuid() }).parse(data))
   .handler(async ({ context, data }) => {
     const { data: myProfile } = await context.supabase
       .from("profiles")
