@@ -5,7 +5,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 // Public read-only fetchers (no auth required)
 export const getPublicProfile = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ userId: z.string().uuid() }).parse(data))
+  .validator((data) => z.object({ userId: z.string().uuid() }).parse(data))
   .handler(async ({ data }) => {
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient<Database>(
