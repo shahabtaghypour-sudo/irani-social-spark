@@ -60,7 +60,7 @@ function FeedPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
-    createMutation.mutate({ content: content.trim(), imageUrl: imageUrl || null });
+    createMutation.mutate({ data: { content: content.trim(), imageUrl: imageUrl || null } });
   };
 
   return (
@@ -105,7 +105,7 @@ function FeedPage() {
             key={post.id}
             post={post}
             liked={likedSet?.has(post.id) ?? false}
-            onToggleLike={(liked) => toggleLikeFn({ postId: post.id, liked })}
+            onToggleLike={(liked) => toggleLikeFn({ data: { postId: post.id, liked } })}
           />
         ))}
       </div>
