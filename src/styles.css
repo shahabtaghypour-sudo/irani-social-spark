@@ -201,3 +201,26 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-rose-300), transparent);
 }
+
+@utility doll-frame {
+  background:
+    radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--color-rose-200) 80%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 70% 70%, color-mix(in oklab, var(--color-lavender-200) 70%, transparent) 0%, transparent 50%),
+    var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow:
+    inset 0 1px 2px color-mix(in oklab, var(--color-rose-100) 60%, transparent),
+    0 8px 24px -8px color-mix(in oklab, var(--color-lavender-400) 25%, transparent);
+}
+
+@utility doll-hover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+@layer components {
+  .doll-hover:hover {
+    box-shadow:
+      0 10px 28px -10px color-mix(in oklab, var(--color-rose-400) 22%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--color-rose-200) 50%, transparent);
+  }
+}
