@@ -7,13 +7,13 @@ import { Heart, MessageCircle, Users, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "سيگار صورتی — soft social space" },
+      { title: "سيگار صورتی — social media for a new generation" },
       {
         name: "description",
-        content: "A soft, poetic social space for Iran's new generation.",
+        content: "A social media for the new generation — connect, share, and sell.",
       },
-      { property: "og:title", content: "سيگار صورتی — soft social space" },
-      { property: "og:description", content: "A soft, poetic social space for Iran's new generation." },
+      { property: "og:title", content: "سيگار صورتی — social media for a new generation" },
+      { property: "og:description", content: "A social media for the new generation — connect, share, and sell." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -33,10 +33,10 @@ function LandingPage() {
         </div>
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-foreground md:text-6xl">
-            Soft voices. <span className="text-gradient">New Iran.</span>
+            A Social media for <span className="text-gradient">new generation</span>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
-            Share, discover, and sell dolls & handmade treasures.
+            Connect, Share, and sell
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             {user ? (

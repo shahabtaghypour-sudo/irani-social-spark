@@ -24,6 +24,7 @@ const CATEGORY_LABELS: Record<Category, string> = {
   doll: "Doll",
   handmade: "Handmade",
   art: "Art",
+  tattoo: "Tattoo art",
   vintage: "Vintage",
   other: "Other",
 };
