@@ -3,7 +3,7 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Database } from "@/integrations/supabase/types";
 
-export const LISTING_CATEGORIES = ["wine", "handmade", "art", "vintage", "other"] as const;
+export const LISTING_CATEGORIES = ["doll", "handmade", "art", "vintage", "other"] as const;
 
 const categorySchema = z.enum(LISTING_CATEGORIES);
 

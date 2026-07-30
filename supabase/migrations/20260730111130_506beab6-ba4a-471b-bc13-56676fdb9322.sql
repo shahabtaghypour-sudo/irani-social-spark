@@ -1,0 +1,1 @@
+UPDATE public.listings SET category = 'doll' WHERE category = 'wine';
