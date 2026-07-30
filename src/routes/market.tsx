@@ -34,12 +34,12 @@ export const Route = createFileRoute("/market")({
       { title: "Market — سيگار صورتی" },
       {
         name: "description",
-        content: "Buy and sell handmade goods, wine, art and vintage finds inside the سيگار صورتی community.",
+        content: "Buy and sell dolls, handmade goods, art and vintage finds inside the سيگار صورتی community.",
       },
       { property: "og:title", content: "Market — سيگار صورتی" },
       {
         property: "og:description",
-        content: "A members' market for handmade goods, wine, art and vintage finds.",
+        content: "A members' market for dolls, handmade goods, art and vintage finds.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -129,8 +129,7 @@ function MarketPage() {
               Handmade, poured & found
             </h1>
             <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-              Sell your ceramics, homemade wine, prints and vintage pieces to the community. Deals happen
-              in DMs.
+              Sell your dolls, ceramics, prints and vintage pieces to the community. Deals happen in DMs.
             </p>
           </div>
           {user ? (
@@ -229,7 +228,7 @@ function MarketPage() {
                 />
               ) : (
                 <div className="grid h-48 w-full place-items-center gradient-hero">
-                  <Wine className="h-10 w-10 text-rose-500" />
+                  <Gift className="h-10 w-10 text-rose-500" />
                 </div>
               )}
               <div className="p-4">
