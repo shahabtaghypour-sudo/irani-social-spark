@@ -16,12 +16,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ImageUpload } from "@/components/image-upload";
-import { Plus, MessageCircle, Wine, Sparkles } from "lucide-react";
+import { Plus, MessageCircle, Gift, Sparkles } from "lucide-react";
 
 type Category = (typeof LISTING_CATEGORIES)[number];
 
 const CATEGORY_LABELS: Record<Category, string> = {
-  wine: "Wine",
+  doll: "Doll",
   handmade: "Handmade",
   art: "Art",
   vintage: "Vintage",
