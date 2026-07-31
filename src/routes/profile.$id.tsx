@@ -74,6 +74,29 @@ function ProfilePage() {
     },
   });
 
+  const saveProfileFn = useServerFn(updateMyProfile);
+  const [isEditing, setIsEditing] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!profile) return;
+    setDisplayName(profile.display_name ?? "");
+    setUsername(profile.username ?? "");
+    setBio(profile.bio ?? "");
+    setAvatarUrl(profile.avatar_url ?? null);
+  }, [profile]);
+
+  const saveMutation = useMutation({
+    mutationFn: saveProfileFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile", id] });
+      setIsEditing(false);
+    },
+  });
+
   if (!profile) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">
@@ -83,6 +106,8 @@ function ProfilePage() {
   }
 
   const isOwnProfile = user?.id === id;
+
+
 
   return (
     <div className="mx-auto w-full max-w-xl px-4 pb-24 pt-6 md:pb-6">
