@@ -11,10 +11,10 @@ import { MessageSquare } from "lucide-react";
 export const Route = createFileRoute("/profile/$id")({
   head: ({ params }) => ({
     meta: [
-      { title: "Profile — سيگار صورتی" },
-      { name: "description", content: "User profile on سيگار صورتی." },
-      { property: "og:title", content: "Profile — سيگار صورتی" },
-      { property: "og:description", content: "User profile on سيگار صورتی." },
+      { title: "Profile — Pink Cigarette" },
+      { name: "description", content: "User profile on Pink Cigarette." },
+      { property: "og:title", content: "Profile — Pink Cigarette" },
+      { property: "og:description", content: "User profile on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: `/profile/${params.id}` }],

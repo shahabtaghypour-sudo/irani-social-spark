@@ -81,11 +81,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "سيگار صورتی" },
-      { name: "description", content: "A social space for Iran's new generation." },
-      { name: "author", content: "سيگار صورتی" },
-      { property: "og:title", content: "سيگار صورتی" },
-      { property: "og:description", content: "A social space for Iran's new generation." },
+      { title: "Pink Cigarette" },
+      { name: "description", content: "A social space for a new generation." },
+      { name: "author", content: "Pink Cigarette" },
+      { property: "og:title", content: "Pink Cigarette" },
+      { property: "og:description", content: "A social space for a new generation." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@sigaresorkh" },
@@ -148,7 +148,7 @@ function AppChrome() {
               <Cigarette className="h-5 w-5 -rotate-12" />
             </div>
             <span className="font-display text-xl font-semibold tracking-tight text-foreground">
-              سيگار صورتی
+              Pink Cigarette
             </span>
           </Link>
 
@@ -181,9 +181,9 @@ function AppChrome() {
 
       <footer className="border-t border-border bg-muted/30 py-8">
         <div className="mx-auto max-w-5xl px-4 text-center text-sm text-muted-foreground">
-          <p className="font-display font-medium text-foreground">سيگار صورتی</p>
-          <p className="mt-1">A social space for Iran's new generation.</p>
-          <p className="mt-4">© {new Date().getFullYear()} سيگار صورتی. All rights reserved.</p>
+          <p className="font-display font-medium text-foreground">Pink Cigarette</p>
+          <p className="mt-1">A social space for a new generation.</p>
+          <p className="mt-4">© {new Date().getFullYear()} Pink Cigarette. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -32,12 +32,12 @@ const CATEGORY_LABELS: Record<Category, string> = {
 export const Route = createFileRoute("/market")({
   head: () => ({
     meta: [
-      { title: "Market — سيگار صورتی" },
+      { title: "Market — Pink Cigarette" },
       {
         name: "description",
-        content: "Buy and sell dolls, handmade goods, art and vintage finds inside the سيگار صورتی community.",
+        content: "Buy and sell dolls, handmade goods, art and vintage finds inside the Pink Cigarette community.",
       },
-      { property: "og:title", content: "Market — سيگار صورتی" },
+      { property: "og:title", content: "Market — Pink Cigarette" },
       {
         property: "og:description",
         content: "A members' market for dolls, handmade goods, art and vintage finds.",

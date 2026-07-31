@@ -11,10 +11,10 @@ import { Cigarette, Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — سيگار صورتی" },
-      { name: "description", content: "Sign in or create an account on سيگار صورتی." },
-      { property: "og:title", content: "Sign in — سيگار صورتی" },
-      { property: "og:description", content: "Sign in or create an account on سيگار صورتی." },
+      { title: "Sign in — Pink Cigarette" },
+      { name: "description", content: "Sign in or create an account on Pink Cigarette." },
+      { property: "og:title", content: "Sign in — Pink Cigarette" },
+      { property: "og:description", content: "Sign in or create an account on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/auth" }],
@@ -94,7 +94,7 @@ function AuthPage() {
             <Cigarette className="h-7 w-7" />
           </div>
           <h1 className="mt-4 font-display text-2xl font-semibold text-foreground">
-            {mode === "signin" ? "Welcome back" : "Join سيگار صورتی"}
+            {mode === "signin" ? "Welcome back" : "Join Pink Cigarette"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {mode === "signin" ? "Sign in to continue." : "Create an account to start sharing."}

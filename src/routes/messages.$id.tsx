@@ -15,10 +15,10 @@ import { format } from "date-fns";
 export const Route = createFileRoute("/messages/$id")({
   head: () => ({
     meta: [
-      { title: "Conversation — سيگار صورتی" },
-      { name: "description", content: "Private conversation on سيگار صورتی." },
-      { property: "og:title", content: "Conversation — سيگار صورتی" },
-      { property: "og:description", content: "Private conversation on سيگار صورتی." },
+      { title: "Conversation — Pink Cigarette" },
+      { name: "description", content: "Private conversation on Pink Cigarette." },
+      { property: "og:title", content: "Conversation — Pink Cigarette" },
+      { property: "og:description", content: "Private conversation on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/messages" }],
