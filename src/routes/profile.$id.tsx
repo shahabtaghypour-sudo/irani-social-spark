@@ -1,20 +1,31 @@
 import { createFileRoute, useParams, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { getPublicProfile, getPublicPosts, toggleFollow, isFollowing, getOrCreateConversation } from "@/lib/social.functions";
+import {
+  getPublicProfile,
+  getPublicPosts,
+  toggleFollow,
+  isFollowing,
+  getOrCreateConversation,
+  updateMyProfile,
+} from "@/lib/social.functions";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ImageUpload } from "@/components/image-upload";
 import { PostCard } from "@/components/post-card";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/profile/$id")({
   head: ({ params }) => ({
     meta: [
-      { title: "Profile — سيگار صورتی" },
-      { name: "description", content: "User profile on سيگار صورتی." },
-      { property: "og:title", content: "Profile — سيگار صورتی" },
-      { property: "og:description", content: "User profile on سيگار صورتی." },
+      { title: "Profile — Pink Cigarette" },
+      { name: "description", content: "User profile on Pink Cigarette." },
+      { property: "og:title", content: "Profile — Pink Cigarette" },
+      { property: "og:description", content: "User profile on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: `/profile/${params.id}` }],
@@ -63,6 +74,29 @@ function ProfilePage() {
     },
   });
 
+  const saveProfileFn = useServerFn(updateMyProfile);
+  const [isEditing, setIsEditing] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!profile) return;
+    setDisplayName(profile.display_name ?? "");
+    setUsername(profile.username ?? "");
+    setBio(profile.bio ?? "");
+    setAvatarUrl(profile.avatar_url ?? null);
+  }, [profile]);
+
+  const saveMutation = useMutation({
+    mutationFn: saveProfileFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile", id] });
+      setIsEditing(false);
+    },
+  });
+
   if (!profile) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">
@@ -72,6 +106,8 @@ function ProfilePage() {
   }
 
   const isOwnProfile = user?.id === id;
+
+
 
   return (
     <div className="mx-auto w-full max-w-xl px-4 pb-24 pt-6 md:pb-6">
@@ -102,7 +138,19 @@ function ProfilePage() {
               </span>
             </div>
 
-            {!isOwnProfile && (
+            {isOwnProfile ? (
+              <div className="mt-4 flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full px-6"
+                  onClick={() => setIsEditing((v) => !v)}
+                >
+                  <Pencil className="mr-2 h-4 w-4" />
+                  {isEditing ? "Cancel" : "Edit profile"}
+                </Button>
+              </div>
+            ) : (
               <div className="mt-4 flex gap-2">
                 <Button
                   variant={following ? "outline" : "default"}
@@ -127,7 +175,54 @@ function ProfilePage() {
             )}
           </div>
         </div>
+
+        {isOwnProfile && isEditing && (
+          <form
+            className="mt-6 space-y-3 border-t border-border pt-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              saveMutation.mutate({
+                data: {
+                  display_name: displayName.trim() || undefined,
+                  username: username.trim() || undefined,
+                  bio: bio.trim(),
+                  avatar_url: avatarUrl,
+                },
+              });
+            }}
+          >
+            <Input
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="Display name"
+              className="rounded-xl"
+            />
+            <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              className="rounded-xl"
+            />
+            <Textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              maxLength={160}
+              placeholder="Write a short bio…"
+              className="min-h-[80px] resize-none rounded-xl"
+            />
+            <ImageUpload value={avatarUrl} onChange={setAvatarUrl} label="Upload an avatar" />
+            {saveMutation.isError && (
+              <p className="text-sm text-destructive">
+                Couldn't save — try a different username.
+              </p>
+            )}
+            <Button type="submit" disabled={saveMutation.isPending} className="w-full rounded-xl">
+              {saveMutation.isPending ? "Saving…" : "Save profile"}
+            </Button>
+          </form>
+        )}
       </div>
+
 
       <div className="mt-8 space-y-6">
         {posts.map((post) => (

@@ -10,10 +10,10 @@ import { formatDistanceToNow } from "date-fns";
 export const Route = createFileRoute("/messages")({
   head: () => ({
     meta: [
-      { title: "Messages — سيگار صورتی" },
-      { name: "description", content: "Your conversations on سيگار صورتی." },
-      { property: "og:title", content: "Messages — سيگار صورتی" },
-      { property: "og:description", content: "Your conversations on سيگار صورتی." },
+      { title: "Messages — Pink Cigarette" },
+      { name: "description", content: "Your conversations on Pink Cigarette." },
+      { property: "og:title", content: "Messages — Pink Cigarette" },
+      { property: "og:description", content: "Your conversations on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/messages" }],

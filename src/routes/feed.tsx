@@ -13,10 +13,10 @@ import { Send } from "lucide-react";
 export const Route = createFileRoute("/feed")({
   head: () => ({
     meta: [
-      { title: "Feed — سيگار صورتی" },
-      { name: "description", content: "Your personal feed on سيگار صورتی." },
-      { property: "og:title", content: "Feed — سيگار صورتی" },
-      { property: "og:description", content: "Your personal feed on سيگار صورتی." },
+      { title: "Feed — Pink Cigarette" },
+      { name: "description", content: "Your personal feed on Pink Cigarette." },
+      { property: "og:title", content: "Feed — Pink Cigarette" },
+      { property: "og:description", content: "Your personal feed on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/feed" }],

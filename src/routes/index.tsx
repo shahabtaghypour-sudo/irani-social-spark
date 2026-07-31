@@ -7,12 +7,12 @@ import { Heart, MessageCircle, Users, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "سيگار صورتی — social media for a new generation" },
+      { title: "Pink Cigarette — social media for a new generation" },
       {
         name: "description",
         content: "A social media for the new generation — connect, share, and sell.",
       },
-      { property: "og:title", content: "سيگار صورتی — social media for a new generation" },
+      { property: "og:title", content: "Pink Cigarette — social media for a new generation" },
       { property: "og:description", content: "A social media for the new generation — connect, share, and sell." },
       { property: "og:type", content: "website" },
     ],

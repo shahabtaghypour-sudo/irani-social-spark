@@ -12,10 +12,10 @@ import { useState } from "react";
 export const Route = createFileRoute("/explore")({
   head: () => ({
     meta: [
-      { title: "Explore — سيگار صورتی" },
-      { name: "description", content: "Discover people to follow on سيگار صورتی." },
-      { property: "og:title", content: "Explore — سيگار صورتی" },
-      { property: "og:description", content: "Discover people to follow on سيگار صورتی." },
+      { title: "Explore — Pink Cigarette" },
+      { name: "description", content: "Discover people to follow on Pink Cigarette." },
+      { property: "og:title", content: "Explore — Pink Cigarette" },
+      { property: "og:description", content: "Discover people to follow on Pink Cigarette." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/explore" }],
