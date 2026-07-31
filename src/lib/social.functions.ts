@@ -136,25 +136,33 @@ export const updateMyProfile = createServerFn({ method: "POST" })
 export const getFeed = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
+    const { data: myProfile } = await context.supabase
+      .from("profiles")
+      .select("id")
+      .eq("user_id", context.userId)
+      .single();
+
     const { data: following, error: followingError } = await context.supabase
       .from("follows")
       .select("following_id")
-      .eq("follower_id", context.userId);
+      .eq("follower_id", myProfile?.id ?? "00000000-0000-0000-0000-000000000000");
 
     if (followingError) throw followingError;
 
-    const followingIds = following?.map((f) => f.following_id) ?? [];
+    const authorIds = [...(following?.map((f) => f.following_id) ?? [])];
+    if (myProfile?.id) authorIds.push(myProfile.id);
 
     const { data: posts, error } = await context.supabase
       .from("posts")
       .select("*, profiles!inner(id, user_id, username, display_name, avatar_url)")
-      .in("author_id", followingIds.length > 0 ? followingIds : ["00000000-0000-0000-0000-000000000000"])
+      .in("author_id", authorIds.length > 0 ? authorIds : ["00000000-0000-0000-0000-000000000000"])
       .order("created_at", { ascending: false })
       .limit(50);
 
     if (error) throw error;
     return posts ?? [];
   });
+
 
 export const createPost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
