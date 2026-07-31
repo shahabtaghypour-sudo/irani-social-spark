@@ -138,7 +138,19 @@ function ProfilePage() {
               </span>
             </div>
 
-            {!isOwnProfile && (
+            {isOwnProfile ? (
+              <div className="mt-4 flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full px-6"
+                  onClick={() => setIsEditing((v) => !v)}
+                >
+                  <Pencil className="mr-2 h-4 w-4" />
+                  {isEditing ? "Cancel" : "Edit profile"}
+                </Button>
+              </div>
+            ) : (
               <div className="mt-4 flex gap-2">
                 <Button
                   variant={following ? "outline" : "default"}
@@ -161,6 +173,55 @@ function ProfilePage() {
                 </Button>
               </div>
             )}
+          </div>
+        </div>
+
+        {isOwnProfile && isEditing && (
+          <form
+            className="mt-6 space-y-3 border-t border-border pt-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              saveMutation.mutate({
+                data: {
+                  display_name: displayName.trim() || undefined,
+                  username: username.trim() || undefined,
+                  bio: bio.trim(),
+                  avatar_url: avatarUrl,
+                },
+              });
+            }}
+          >
+            <Input
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="Display name"
+              className="rounded-xl"
+            />
+            <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              className="rounded-xl"
+            />
+            <Textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              maxLength={160}
+              placeholder="Write a short bio…"
+              className="min-h-[80px] resize-none rounded-xl"
+            />
+            <ImageUpload value={avatarUrl} onChange={setAvatarUrl} label="Upload an avatar" />
+            {saveMutation.isError && (
+              <p className="text-sm text-destructive">
+                Couldn't save — try a different username.
+              </p>
+            )}
+            <Button type="submit" disabled={saveMutation.isPending} className="w-full rounded-xl">
+              {saveMutation.isPending ? "Saving…" : "Save profile"}
+            </Button>
+          </form>
+        )}
+
           </div>
         </div>
       </div>
