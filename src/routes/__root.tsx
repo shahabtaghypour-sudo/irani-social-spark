@@ -174,7 +174,7 @@ function AppChrome() {
         </div>
       </header>
 
-      <div className="border-b border-border bg-background/60 px-4 py-2">
+      <div className="border-b border-border bg-background/60 px-4 py-1.5">
         <AdSlot />
       </div>
 
