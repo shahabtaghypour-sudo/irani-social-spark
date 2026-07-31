@@ -1,12 +1,23 @@
 import { createFileRoute, useParams, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { getPublicProfile, getPublicPosts, toggleFollow, isFollowing, getOrCreateConversation } from "@/lib/social.functions";
+import {
+  getPublicProfile,
+  getPublicPosts,
+  toggleFollow,
+  isFollowing,
+  getOrCreateConversation,
+  updateMyProfile,
+} from "@/lib/social.functions";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ImageUpload } from "@/components/image-upload";
 import { PostCard } from "@/components/post-card";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/profile/$id")({
   head: ({ params }) => ({
