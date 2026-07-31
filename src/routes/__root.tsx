@@ -15,6 +15,7 @@ import { AuthProvider, useAuth } from "../lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Cigarette, Home, Search, MessageCircle, User, ShoppingBag } from "lucide-react";
+import { AdSlot } from "@/components/ad-slot";
 
 function NotFoundComponent() {
   return (
@@ -172,6 +173,11 @@ function AppChrome() {
           </div>
         </div>
       </header>
+
+      <div className="border-b border-border bg-background/60 px-4 py-2">
+        <AdSlot />
+      </div>
+
 
       <main className="flex-1">
         <Outlet />
