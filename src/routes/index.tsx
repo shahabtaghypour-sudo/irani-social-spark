@@ -27,9 +27,9 @@ function LandingPage() {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="gradient-hero relative overflow-hidden px-4 py-20 md:py-28">
-        <div className="doll-frame mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full text-lavender-600 md:h-24 md:w-24">
-          <DollIcon className="h-10 w-10 md:h-12 md:w-12" />
+      <section className="gradient-hero relative overflow-hidden px-4 pt-10 pb-12 md:pt-14 md:pb-16">
+        <div className="doll-frame mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-lavender-600 md:h-20 md:w-20">
+          <DollIcon className="h-8 w-8 md:h-10 md:w-10" />
         </div>
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-foreground md:text-6xl">
