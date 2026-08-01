@@ -31,8 +31,9 @@ export async function ensureProfile(supabase: SupabaseClient<Database>, userId: 
     .from("profiles")
     .select("id")
     .eq("user_id", userId)
-    .single();
+    .maybeSingle();
 
   if (concurrentError) throw concurrentError;
+  if (!concurrentProfile) throw new Error("Your profile is still being prepared. Please try again.");
   return concurrentProfile;
 }
