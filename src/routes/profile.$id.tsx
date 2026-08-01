@@ -35,7 +35,7 @@ export const Route = createFileRoute("/profile/$id")({
 
 function ProfilePage() {
   const { id } = useParams({ from: "/profile/$id" });
-  const { user } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const fetchProfile = useServerFn(getPublicProfile);
@@ -60,7 +60,7 @@ function ProfilePage() {
         if (!profile) return Promise.resolve(false);
         return isFollowingFn({ data: { profileId: profile.id } });
       },
-    enabled: !!profile,
+    enabled: !!user && !!profile && user.id !== id,
   });
 
   const followMutation = useMutation({
@@ -149,7 +149,7 @@ function ProfilePage() {
               </span>
             </div>
 
-            {isOwnProfile ? (
+            {authLoading ? null : isOwnProfile ? (
               <div className="mt-4 flex gap-2">
                 <Button
                   variant="outline"
@@ -161,7 +161,7 @@ function ProfilePage() {
                   {isEditing ? "Cancel" : "Edit profile"}
                 </Button>
               </div>
-            ) : (
+            ) : user ? (
               <div className="mt-4 flex gap-2">
                 <Button
                   variant={following ? "outline" : "default"}
@@ -181,6 +181,12 @@ function ProfilePage() {
                 >
                   <MessageSquare className="mr-2 h-4 w-4" />
                   Message
+                </Button>
+              </div>
+            ) : (
+              <div className="mt-4">
+                <Button asChild size="sm" className="rounded-full px-6">
+                  <Link to="/auth">Sign in to connect</Link>
                 </Button>
               </div>
             )}
