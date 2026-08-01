@@ -48,11 +48,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (mounted) setIsLoading(false);
     });
 
-    const { data: subscription } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session?.user) await bootstrapProfile(session.user);
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!mounted) return;
       setUser(session?.user ?? null);
       setIsLoading(false);
+      if (session?.user) void bootstrapProfile(session.user);
     });
 
     return () => {
