@@ -84,6 +84,12 @@ function FeedPage() {
           </Button>
         </div>
 
+        {createMutation.isError && (
+          <p className="mt-3 text-sm text-destructive" role="alert">
+            {createMutation.error instanceof Error ? createMutation.error.message : "Could not publish your post."}
+          </p>
+        )}
+
       </form>
 
       <div className="mt-8 space-y-6">

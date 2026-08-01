@@ -8,8 +8,8 @@ import {
   createListing,
   setListingStatus,
   deleteListing,
-  LISTING_CATEGORIES,
 } from "@/lib/market.functions";
+import { LISTING_CATEGORIES } from "@/lib/market.constants";
 import { getOrCreateConversation } from "@/lib/social.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -194,6 +194,13 @@ function MarketPage() {
           >
             {createMutation.isPending ? "Publishing…" : "Publish listing"}
           </Button>
+          {createMutation.isError && (
+            <p className="text-sm text-destructive" role="alert">
+              {createMutation.error instanceof Error
+                ? createMutation.error.message
+                : "Could not publish your listing."}
+            </p>
+          )}
         </form>
       )}
 

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Database } from "@/integrations/supabase/types";
+import { ensureProfile } from "@/lib/profile.server";
 
 // Public read-only fetchers (no auth required)
 export const getPublicProfile = createServerFn({ method: "GET" })
@@ -87,26 +88,7 @@ export const getMyProfile = createServerFn({ method: "GET" })
 export const ensureMyProfile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data: existing } = await context.supabase
-      .from("profiles")
-      .select("id")
-      .eq("user_id", context.userId)
-      .single();
-
-    if (existing) return existing;
-
-    const { data: profile, error } = await context.supabase
-      .from("profiles")
-      .insert({
-        user_id: context.userId,
-        username: "user_" + context.userId.slice(0, 8),
-        display_name: "New User",
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-    return profile;
+    return ensureProfile(context.supabase, context.userId);
   });
 
 export const updateMyProfile = createServerFn({ method: "POST" })
@@ -117,7 +99,7 @@ export const updateMyProfile = createServerFn({ method: "POST" })
         username: z.string().min(2).max(30).optional(),
         display_name: z.string().min(1).max(50).optional(),
         bio: z.string().max(160).optional(),
-        avatar_url: z.string().url().max(500).optional().nullable(),
+        avatar_url: z.string().url().max(2000).optional().nullable(),
       })
       .parse(data),
   )
@@ -170,18 +152,12 @@ export const createPost = createServerFn({ method: "POST" })
     z
       .object({
         content: z.string().min(1).max(1000),
-        imageUrl: z.string().url().max(500).optional().nullable(),
+        imageUrl: z.string().url().max(2000).optional().nullable(),
       })
       .parse(data),
   )
   .handler(async ({ context, data }) => {
-    const { data: profile } = await context.supabase
-      .from("profiles")
-      .select("id")
-      .eq("user_id", context.userId)
-      .single();
-
-    if (!profile) throw new Error("Profile not found");
+    const profile = await ensureProfile(context.supabase, context.userId);
 
     const { data: post, error } = await context.supabase
       .from("posts")

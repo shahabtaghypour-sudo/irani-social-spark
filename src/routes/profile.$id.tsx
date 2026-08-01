@@ -44,7 +44,7 @@ function ProfilePage() {
   const isFollowingFn = useServerFn(isFollowing);
   const getConversationFn = useServerFn(getOrCreateConversation);
 
-  const { data: profile } = useQuery({
+  const { data: profile, isPending: profilePending, isError: profileError } = useQuery({
     queryKey: ["profile", id],
     queryFn: () => fetchProfile({ data: { userId: id } }),
   });
@@ -56,7 +56,10 @@ function ProfilePage() {
 
   const { data: following } = useQuery({
     queryKey: ["following", profile?.id],
-    queryFn: () => isFollowingFn({ data: { profileId: profile!.id } }),
+      queryFn: () => {
+        if (!profile) return Promise.resolve(false);
+        return isFollowingFn({ data: { profileId: profile.id } });
+      },
     enabled: !!profile,
   });
 
@@ -97,7 +100,15 @@ function ProfilePage() {
     },
   });
 
-  if (!profile) {
+  if (profilePending) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">
+        <p>Loading profile…</p>
+      </div>
+    );
+  }
+
+  if (profileError || !profile) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">
         <p>Profile not found.</p>
