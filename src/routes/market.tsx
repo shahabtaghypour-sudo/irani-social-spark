@@ -127,7 +127,7 @@ function MarketPage() {
               <Sparkles className="h-3.5 w-3.5" /> Members' market
             </p>
             <h1 className="mt-2 font-display text-3xl font-semibold text-foreground">
-              Sell Your Handmade Art
+              SELL Yours, BUY from Them
             </h1>
             <p className="mt-1 max-w-lg text-sm text-muted-foreground">
               Sell your dolls, ceramics, prints and vintage pieces to the community. Deals happen in DMs.
