@@ -18,15 +18,18 @@ async function bootstrapProfile(user: User) {
 
   if (lookupError || existing) return;
 
-  await supabase.from("profiles").insert({
-    user_id: user.id,
-    username: `member_${user.id.replaceAll("-", "").slice(0, 12)}`,
-    display_name:
-      (typeof user.user_metadata?.full_name === "string" && user.user_metadata.full_name) ||
-      (typeof user.user_metadata?.display_name === "string" && user.user_metadata.display_name) ||
-      "New member",
-    avatar_url: typeof user.user_metadata?.avatar_url === "string" ? user.user_metadata.avatar_url : null,
-  });
+  await supabase.from("profiles").upsert(
+    {
+      user_id: user.id,
+      username: `member_${user.id.replaceAll("-", "").slice(0, 12)}`,
+      display_name:
+        (typeof user.user_metadata?.full_name === "string" && user.user_metadata.full_name) ||
+        (typeof user.user_metadata?.display_name === "string" && user.user_metadata.display_name) ||
+        "New member",
+      avatar_url: typeof user.user_metadata?.avatar_url === "string" ? user.user_metadata.avatar_url : null,
+    },
+    { onConflict: "user_id", ignoreDuplicates: true },
+  );
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -36,18 +39,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
-    supabase.auth.getUser().then(({ data, error }) => {
+    supabase.auth.getUser().then(async ({ data, error }) => {
       if (!mounted) return;
       if (!error) {
-        setUser(data.user);
-        if (data.user) void bootstrapProfile(data.user);
+        if (data.user) await bootstrapProfile(data.user);
+        if (mounted) setUser(data.user);
       }
-      setIsLoading(false);
+      if (mounted) setIsLoading(false);
     });
 
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: subscription } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user) await bootstrapProfile(session.user);
+      if (!mounted) return;
       setUser(session?.user ?? null);
-      if (session?.user) void bootstrapProfile(session.user);
       setIsLoading(false);
     });
 

@@ -13,14 +13,26 @@ export async function ensureProfile(supabase: SupabaseClient<Database>, userId: 
 
   const { data: created, error: createError } = await supabase
     .from("profiles")
-    .insert({
-      user_id: userId,
-      username: `member_${userId.replaceAll("-", "").slice(0, 12)}`,
-      display_name: "New member",
-    })
+    .upsert(
+      {
+        user_id: userId,
+        username: `member_${userId.replaceAll("-", "").slice(0, 12)}`,
+        display_name: "New member",
+      },
+      { onConflict: "user_id", ignoreDuplicates: true },
+    )
     .select("id")
-    .single();
+    .maybeSingle();
 
   if (createError) throw createError;
-  return created;
+  if (created) return created;
+
+  const { data: concurrentProfile, error: concurrentError } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
+
+  if (concurrentError) throw concurrentError;
+  return concurrentProfile;
 }

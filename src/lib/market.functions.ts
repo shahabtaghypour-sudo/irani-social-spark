@@ -5,8 +5,6 @@ import { LISTING_CATEGORIES } from "@/lib/market.constants";
 import { createPublicDatabaseClient } from "@/lib/market.server";
 import { ensureProfile } from "@/lib/profile.server";
 
-export { LISTING_CATEGORIES } from "@/lib/market.constants";
-
 export const getListings = createServerFn({ method: "GET" })
   .validator((data) =>
     z
