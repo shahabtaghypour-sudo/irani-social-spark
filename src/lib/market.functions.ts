@@ -1,27 +1,18 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import type { Database } from "@/integrations/supabase/types";
-
-export const LISTING_CATEGORIES = ["doll", "handmade", "art", "tattoo", "vintage", "other"] as const;
-
-const categorySchema = z.enum(LISTING_CATEGORIES);
-
-async function publicClient() {
-  const { createClient } = await import("@supabase/supabase-js");
-  return createClient<Database>(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!, {
-    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
-  });
-}
+import { LISTING_CATEGORIES } from "@/lib/market.constants";
+import { createPublicDatabaseClient } from "@/lib/market.server";
+import { ensureProfile } from "@/lib/profile.server";
 
 export const getListings = createServerFn({ method: "GET" })
   .validator((data) =>
     z
-      .object({ category: categorySchema.optional().nullable() })
+      .object({ category: z.enum(LISTING_CATEGORIES).optional().nullable() })
       .parse(data ?? {}),
   )
   .handler(async ({ data }) => {
-    const supabase = await publicClient();
+    const supabase = createPublicDatabaseClient();
 
     let query = supabase
       .from("listings")
@@ -67,19 +58,13 @@ export const createListing = createServerFn({ method: "POST" })
         description: z.string().max(1000).optional().nullable(),
         price: z.number().min(0).max(10_000_000),
         currency: z.string().min(1).max(8).default("USD"),
-        category: categorySchema,
+        category: z.enum(LISTING_CATEGORIES),
         imageUrl: z.string().url().max(2000).optional().nullable(),
       })
       .parse(data),
   )
   .handler(async ({ context, data }) => {
-    const { data: myProfile } = await context.supabase
-      .from("profiles")
-      .select("id")
-      .eq("user_id", context.userId)
-      .single();
-
-    if (!myProfile) throw new Error("Profile not found");
+    const myProfile = await ensureProfile(context.supabase, context.userId);
 
     const { data: listing, error } = await context.supabase
       .from("listings")
