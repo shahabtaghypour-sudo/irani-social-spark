@@ -133,19 +133,38 @@ function RootComponent() {
 
 const TAGLINE = "Pink Cigarette Bookstore. A sanctuary for rare texts. A society of free readers.";
 
+const NAV = [
+  { to: "/", label: "Home" },
+  { to: "/support", label: "Support" },
+  { to: "/donate", label: "Donate" },
+] as const;
+
 function AppChrome() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-center px-4">
+        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 px-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="ember-glow grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-rose-300 via-rose-400 to-lavender-400 text-primary-foreground">
-              <BookOpen className="h-5 w-5" />
+            <div className="ember-glow grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-rose-300 via-rose-400 to-lavender-400 text-primary-foreground">
+              <BookOpen className="h-4 w-4" />
             </div>
             <span className="font-display truncate text-sm font-semibold tracking-tight text-foreground md:text-lg">
               Pink Cigarette Bookstore.
             </span>
           </Link>
+          <nav aria-label="Main" className="flex items-center gap-1 text-xs md:text-sm">
+            {NAV.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                activeOptions={{ exact: item.to === "/" }}
+                activeProps={{ className: "bg-secondary text-foreground" }}
+                className="rounded-full px-2.5 py-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </header>
 
