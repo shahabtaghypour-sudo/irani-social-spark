@@ -143,7 +143,7 @@ function AppChrome() {
               <BookOpen className="h-5 w-5" />
             </div>
             <span className="font-display truncate text-sm font-semibold tracking-tight text-foreground md:text-lg">
-              {TAGLINE}
+              Pink Cigarette Bookstore.
             </span>
           </Link>
         </div>

@@ -26,7 +26,7 @@ function BookstorePage() {
         </div>
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-3xl font-bold leading-snug tracking-tight text-foreground md:text-5xl">
-            <span className="text-gradient">{TAGLINE}</span>
+            <span className="text-gradient">A sanctuary for rare texts. A society of free readers.</span>
           </h1>
         </div>
       </section>
