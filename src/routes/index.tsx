@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen } from "lucide-react";
 
-const TAGLINE = "پناهگاهِ متون خاص، جامعه خوانندگان آزاد";
+const TAGLINE = "Pink Cigarette Bookstore. A sanctuary for rare texts. A society of free readers.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,7 +24,7 @@ function BookstorePage() {
         <div className="doll-frame mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-lavender-600 md:h-20 md:w-20">
           <BookOpen className="h-8 w-8 md:h-10 md:w-10" />
         </div>
-        <div className="mx-auto max-w-3xl text-center" dir="rtl">
+        <div className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-3xl font-bold leading-snug tracking-tight text-foreground md:text-5xl">
             <span className="text-gradient">{TAGLINE}</span>
           </h1>
