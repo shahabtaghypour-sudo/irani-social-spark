@@ -79,10 +79,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f" },
-      { name: "description", content: "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f" },
-      { property: "og:title", content: "پناهگاهِ متون خاص، جامعه خوانندگان آزاد" },
-      { property: "og:description", content: "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f" },
+      { title: "Pink Cigarette Bookstore" },
+      { name: "description", content: "A sanctuary for rare texts. A society of free readers." },
+      { property: "og:title", content: "Pink Cigarette Bookstore" },
+      { property: "og:description", content: "A sanctuary for rare texts. A society of free readers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@sigaresorkh" },
@@ -131,7 +131,7 @@ function RootComponent() {
   );
 }
 
-const TAGLINE = "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f";
+const TAGLINE = "Pink Cigarette Bookstore. A sanctuary for rare texts. A society of free readers.";
 
 function AppChrome() {
   return (
@@ -142,7 +142,7 @@ function AppChrome() {
             <div className="ember-glow grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-rose-300 via-rose-400 to-lavender-400 text-primary-foreground">
               <BookOpen className="h-5 w-5" />
             </div>
-            <span className="font-display truncate text-sm font-semibold tracking-tight text-foreground md:text-lg" dir="rtl">
+            <span className="font-display truncate text-sm font-semibold tracking-tight text-foreground md:text-lg">
               {TAGLINE}
             </span>
           </Link>
@@ -158,7 +158,7 @@ function AppChrome() {
       </main>
 
       <footer className="border-t border-border bg-muted/30 py-8">
-        <div className="mx-auto max-w-5xl px-4 text-center text-sm text-muted-foreground" dir="rtl">
+        <div className="mx-auto max-w-5xl px-4 text-center text-sm text-muted-foreground">
           <p className="font-display font-medium text-foreground">{TAGLINE}</p>
         </div>
       </footer>
