@@ -11,10 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { AuthProvider, useAuth } from "../lib/auth";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Cigarette, Home, Search, MessageCircle, User, ShoppingBag } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
 
 function NotFoundComponent() {
@@ -82,11 +79,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pink Cigarette" },
-      { name: "description", content: "A social space for a new generation." },
-      { name: "author", content: "Pink Cigarette" },
-      { property: "og:title", content: "Pink Cigarette" },
-      { property: "og:description", content: "A social space for a new generation." },
+      { title: "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f" },
+      { name: "description", content: "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f" },
+      { property: "og:title", content: "پناهگاهِ متون خاص، جامعه خوانندگان آزاد" },
+      { property: "og:description", content: "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@sigaresorkh" },
@@ -130,47 +126,26 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AppChrome />
-      </AuthProvider>
+      <AppChrome />
     </QueryClientProvider>
   );
 }
 
-function AppChrome() {
-  const { user, isLoading } = useAuth();
+const TAGLINE = "\u067e\u0646\u0627\u0647\u06af\u0627\u0647\u0650 \u0645\u062a\u0648\u0646 \u062e\u0627\u0635\u060c \u062c\u0627\u0645\u0639\u0647 \u062e\u0648\u0627\u0646\u0646\u062f\u06af\u0627\u0646 \u0622\u0632\u0627\u062f";
 
+function AppChrome() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
+        <div className="mx-auto flex h-16 max-w-5xl items-center justify-center px-4">
           <Link to="/" className="flex items-center gap-2">
             <div className="ember-glow grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-rose-300 via-rose-400 to-lavender-400 text-primary-foreground">
-              <Cigarette className="h-5 w-5 -rotate-12" />
+              <BookOpen className="h-5 w-5" />
             </div>
-            <span className="font-display text-xl font-semibold tracking-tight text-foreground">
-              Pink Cigarette
+            <span className="font-display truncate text-sm font-semibold tracking-tight text-foreground md:text-lg" dir="rtl">
+              {TAGLINE}
             </span>
           </Link>
-
-          <nav className="hidden items-center gap-1 md:flex">
-            <HeaderLink to="/" icon={Home} label="Home" />
-            <HeaderLink to="/explore" icon={Search} label="Explore" />
-            <HeaderLink to="/market" icon={ShoppingBag} label="Market" />
-            {user && <HeaderLink to="/messages" icon={MessageCircle} label="Messages" />}
-            {user && <HeaderLink to={`/profile/${user.id}`} icon={User} label="Profile" />}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            {!isLoading &&
-              (user ? (
-                <SignOutButton />
-              ) : (
-                <Button asChild size="sm" className="rounded-full px-5">
-                  <Link to="/auth">Join</Link>
-                </Button>
-              ))}
-          </div>
         </div>
       </header>
 
@@ -178,80 +153,15 @@ function AppChrome() {
         <AdSlot />
       </div>
 
-
       <main className="flex-1">
         <Outlet />
       </main>
 
-      <MobileNav />
-
       <footer className="border-t border-border bg-muted/30 py-8">
-        <div className="mx-auto max-w-5xl px-4 text-center text-sm text-muted-foreground">
-          <p className="font-display font-medium text-foreground">Pink Cigarette</p>
-          <p className="mt-1">A social space for a new generation.</p>
-          <p className="mt-4">© {new Date().getFullYear()} Pink Cigarette. All rights reserved.</p>
+        <div className="mx-auto max-w-5xl px-4 text-center text-sm text-muted-foreground" dir="rtl">
+          <p className="font-display font-medium text-foreground">{TAGLINE}</p>
         </div>
       </footer>
     </div>
-  );
-}
-
-function HeaderLink({ to, icon: Icon, label }: { to: string; icon: React.ElementType; label: string }) {
-  return (
-    <Link
-      to={to}
-      activeProps={{ className: "text-foreground bg-accent" }}
-      className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-    >
-      <Icon className="h-4 w-4" />
-      {label}
-    </Link>
-  );
-}
-
-function SignOutButton() {
-  const router = useRouter();
-
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={async () => {
-        await supabase.auth.signOut();
-        router.invalidate();
-        router.navigate({ to: "/", replace: true });
-      }}
-    >
-      Sign out
-    </Button>
-  );
-}
-
-function MobileNav() {
-  const { user } = useAuth();
-
-  return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 backdrop-blur-md md:hidden">
-      <div className="mx-auto flex h-16 max-w-md items-center justify-around px-2">
-        <MobileNavLink to="/" icon={Home} label="Home" />
-        <MobileNavLink to="/explore" icon={Search} label="Explore" />
-        <MobileNavLink to="/market" icon={ShoppingBag} label="Market" />
-        {user && <MobileNavLink to="/messages" icon={MessageCircle} label="Messages" />}
-        {user && <MobileNavLink to={`/profile/${user.id}`} icon={User} label="Profile" />}
-      </div>
-    </nav>
-  );
-}
-
-function MobileNavLink({ to, icon: Icon, label }: { to: string; icon: React.ElementType; label: string }) {
-  return (
-    <Link
-      to={to}
-      activeProps={{ className: "text-primary" }}
-      className="flex flex-col items-center gap-1 rounded-lg p-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-    >
-      <Icon className="h-5 w-5" />
-      {label}
-    </Link>
   );
 }
