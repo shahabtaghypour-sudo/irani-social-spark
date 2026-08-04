@@ -99,8 +99,8 @@ function BookstorePage() {
               aria-label="Sort books"
               className="card-soft ml-auto rounded-full px-3 py-1 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring"
             >
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
+              <option value="newest">Recently added</option>
+              <option value="oldest">Oldest added</option>
               <option value="title">Title A–Z</option>
             </select>
           </div>
