@@ -9,16 +9,23 @@ export const Route = createFileRoute("/books/$id")({
     if (!book) throw notFound();
     return book;
   },
-  head: ({ loaderData: book }) => ({
-    meta: [
-      { title: `${book.title} — Pink Cigarette Bookstore` },
-      { name: "description", content: book.description || `A ${book.category} book by ${book.author}.` },
-      { property: "og:title", content: `${book.title} — Pink Cigarette Bookstore` },
-      { property: "og:description", content: book.description || `A ${book.category} book by ${book.author}.` },
-      { property: "og:type", content: "website" },
-    ],
-    links: [{ rel: "canonical", href: `/books/${book.id}` }],
-  }),
+  head: ({ loaderData: book }) => {
+    const title = book ? `${book.title} — Pink Cigarette Bookstore` : "Book — Pink Cigarette Bookstore";
+    const description = book
+      ? book.description || `A ${book.category} book by ${book.author}.`
+      : "A rare text from Pink Cigarette Bookstore.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: book ? `/books/${book.id}` : "/books" }],
+    };
+  },
+
   component: BookDetailPage,
   notFoundComponent: BookNotFound,
 });

@@ -38,8 +38,9 @@ function BookstorePage() {
   const sort = search.sort;
 
   const setSearch = (patch: Partial<BookSearch>) => {
-    navigate({ search: (prev) => ({ ...prev, ...patch }) });
+    navigate({ search: (prev: BookSearch) => ({ ...prev, ...patch }) });
   };
+
 
   const books = useMemo(() => {
     const q = query.trim().toLowerCase();
