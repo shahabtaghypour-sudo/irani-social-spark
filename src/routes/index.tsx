@@ -116,6 +116,12 @@ function BookstorePage() {
               <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                 {book.category} · {book.year}
               </p>
+              {typeof book.price === "number" && (
+                <p className="mt-2 text-sm font-semibold text-primary">${book.price}</p>
+              )}
+              {book.description && (
+                <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-muted-foreground">{book.description}</p>
+              )}
             </article>
           ))}
         </div>
