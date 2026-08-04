@@ -4,6 +4,8 @@ export type Book = {
   author: string;
   category: string;
   year: number;
+  description?: string;
+  price?: number;
 };
 
 export const BOOK_CATEGORIES = [
