@@ -30,7 +30,10 @@ function BookstorePage() {
     const q = query.trim().toLowerCase();
     const list = BOOKS.filter((b) => {
       const matchesQuery =
-        !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q);
+        !q ||
+        b.title.toLowerCase().includes(q) ||
+        b.author.toLowerCase().includes(q) ||
+        (b.description && b.description.toLowerCase().includes(q));
       const matchesCat = category === "All" || b.category === category;
       return matchesQuery && matchesCat;
     });
