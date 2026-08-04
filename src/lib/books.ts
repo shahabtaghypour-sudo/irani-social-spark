@@ -12,6 +12,7 @@ export const BOOK_CATEGORIES = [
   "All",
   "Poetry",
   "Philosophy",
+  "Sufism",
   "Fiction",
   "Essays",
   "Art",

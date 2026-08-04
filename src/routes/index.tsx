@@ -38,7 +38,11 @@ function BookstorePage() {
       return matchesQuery && matchesCat;
     });
     return list.sort((a, b) =>
-      sort === "title" ? a.title.localeCompare(b.title) : sort === "oldest" ? a.year - b.year : b.year - a.year,
+      sort === "title"
+        ? a.title.localeCompare(b.title)
+        : sort === "oldest"
+          ? Number(a.id) - Number(b.id)
+          : Number(b.id) - Number(a.id),
     );
   }, [query, category, sort]);
 
@@ -49,7 +53,7 @@ function BookstorePage() {
           <BookOpen className="h-5 w-5" />
         </div>
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-base font-semibold leading-snug tracking-tight text-foreground md:text-xl">
+          <h1 className="font-display whitespace-nowrap text-sm font-semibold leading-snug tracking-tight text-foreground md:text-base">
             <span className="text-gradient">{TAGLINE}</span>
           </h1>
         </div>
@@ -95,8 +99,8 @@ function BookstorePage() {
               aria-label="Sort books"
               className="card-soft ml-auto rounded-full px-3 py-1 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring"
             >
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
+              <option value="newest">Recently added</option>
+              <option value="oldest">Oldest added</option>
               <option value="title">Title A–Z</option>
             </select>
           </div>
