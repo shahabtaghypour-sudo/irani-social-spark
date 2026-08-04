@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BooksIdRouteImport } from './routes/books.$id'
 
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksIdRoute = BooksIdRouteImport.update({
+  id: '/books/$id',
+  path: '/books/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
   '/support': typeof SupportRoute
+  '/books/$id': typeof BooksIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
   '/support': typeof SupportRoute
+  '/books/$id': typeof BooksIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
   '/support': typeof SupportRoute
+  '/books/$id': typeof BooksIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/donate' | '/support'
+  fullPaths: '/' | '/donate' | '/support' | '/books/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/donate' | '/support'
-  id: '__root__' | '/' | '/donate' | '/support'
+  to: '/' | '/donate' | '/support' | '/books/$id'
+  id: '__root__' | '/' | '/donate' | '/support' | '/books/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DonateRoute: typeof DonateRoute
   SupportRoute: typeof SupportRoute
+  BooksIdRoute: typeof BooksIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books/$id': {
+      id: '/books/$id'
+      path: '/books/$id'
+      fullPath: '/books/$id'
+      preLoaderRoute: typeof BooksIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DonateRoute: DonateRoute,
   SupportRoute: SupportRoute,
+  BooksIdRoute: BooksIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

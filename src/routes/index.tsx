@@ -1,11 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { z } from "zod";
 import { BOOKS, BOOK_CATEGORIES } from "@/lib/books";
 
 const TAGLINE = "A sanctuary for rare texts. A society of free readers.";
 
+const searchSchema = z.object({
+  q: z.string().catch(""),
+  cat: z.string().catch("All"),
+  sort: z.enum(["newest", "oldest", "title"]).catch("newest"),
+});
+
+type BookSearch = z.infer<typeof searchSchema>;
+
 export const Route = createFileRoute("/")({
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
       { title: "Pink Cigarette Bookstore — Rare Texts for Free Readers" },
@@ -19,12 +29,18 @@ export const Route = createFileRoute("/")({
   component: BookstorePage,
 });
 
-type SortKey = "newest" | "oldest" | "title";
-
 function BookstorePage() {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<string>("All");
-  const [sort, setSort] = useState<SortKey>("newest");
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+
+  const query = search.q;
+  const category = search.cat;
+  const sort = search.sort;
+
+  const setSearch = (patch: Partial<BookSearch>) => {
+    navigate({ search: (prev: BookSearch) => ({ ...prev, ...patch }) });
+  };
+
 
   const books = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -70,7 +86,7 @@ function BookstorePage() {
             <input
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => setSearch({ q: e.target.value })}
               placeholder="Search by title or author…"
               className="card-soft w-full rounded-xl py-2.5 pl-9 pr-3 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
             />
@@ -81,7 +97,7 @@ function BookstorePage() {
               <button
                 key={c}
                 type="button"
-                onClick={() => setCategory(c)}
+                onClick={() => setSearch({ cat: c })}
                 aria-pressed={category === c}
                 className={
                   category === c
@@ -95,7 +111,7 @@ function BookstorePage() {
 
             <select
               value={sort}
-              onChange={(e) => setSort(e.target.value as SortKey)}
+              onChange={(e) => setSearch({ sort: e.target.value as BookSearch["sort"] })}
               aria-label="Sort books"
               className="card-soft ml-auto rounded-full px-3 py-1 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring"
             >
@@ -108,14 +124,19 @@ function BookstorePage() {
 
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {books.map((book) => (
-            <article
+            <Link
               key={book.id}
-              className="card-soft doll-hover flex flex-col rounded-2xl p-4 transition-transform hover:-translate-y-1"
+              to="/books/$id"
+              params={{ id: book.id }}
+              search={{ q: query, cat: category, sort }}
+              className="group card-soft doll-hover flex flex-col rounded-2xl p-4 transition-transform hover:-translate-y-1"
             >
               <div className="mb-3 flex aspect-[3/4] items-center justify-center rounded-xl bg-muted/40">
                 <BookOpen className="h-6 w-6 text-lavender-600" aria-hidden="true" />
               </div>
-              <h2 className="font-display text-sm font-semibold leading-tight text-foreground">{book.title}</h2>
+              <h2 className="font-display text-sm font-semibold leading-tight text-foreground group-hover:text-primary">
+                {book.title}
+              </h2>
               <p className="mt-0.5 text-xs text-muted-foreground">{book.author}</p>
               <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                 {book.category} · {book.year}
@@ -124,9 +145,11 @@ function BookstorePage() {
                 <p className="mt-2 text-sm font-semibold text-primary">${book.price}</p>
               )}
               {book.description && (
-                <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-muted-foreground">{book.description}</p>
+                <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-muted-foreground">
+                  {book.description}
+                </p>
               )}
-            </article>
+            </Link>
           ))}
         </div>
 
