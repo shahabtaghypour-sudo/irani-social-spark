@@ -38,7 +38,11 @@ function BookstorePage() {
       return matchesQuery && matchesCat;
     });
     return list.sort((a, b) =>
-      sort === "title" ? a.title.localeCompare(b.title) : sort === "oldest" ? a.year - b.year : b.year - a.year,
+      sort === "title"
+        ? a.title.localeCompare(b.title)
+        : sort === "oldest"
+          ? Number(a.id) - Number(b.id)
+          : Number(b.id) - Number(a.id),
     );
   }, [query, category, sort]);
 
