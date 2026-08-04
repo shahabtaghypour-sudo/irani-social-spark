@@ -53,7 +53,7 @@ function BookstorePage() {
           <BookOpen className="h-5 w-5" />
         </div>
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-base font-semibold leading-snug tracking-tight text-foreground md:text-xl">
+          <h1 className="font-display whitespace-nowrap text-sm font-semibold leading-snug tracking-tight text-foreground md:text-base">
             <span className="text-gradient">{TAGLINE}</span>
           </h1>
         </div>
